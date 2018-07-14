@@ -1,0 +1,23 @@
+.SUFFIXES:
+
+.PHONY: all clean
+
+all: ..$(SEP)$(DIST_DIR)$(SEP)$(PROGRAM)
+ifeq ($(CC),cl)
+	$(SET_ENV) && $(CC) $(CFLAGS) /I ..$(SEP)$(INCLUDE_DIR) $(INCLUDE) $(LIBS) \
+		/Fe:..$(SEP)$(DIST_DIR)$(SEP)$(PROGRAM) $(OBJS)
+else
+	$(CC) $(CFLAGS) -o ..$(SEP)$(DIST_DIR)$(SEP)$(PROGRAM) $(OBJS) \
+		-I ..$(SEP)$(INCLUDE_DIR) $(INCLUDE) $(LIBS)
+endif
+
+..$(SEP)$(DIST_DIR)$(SEP)$(PROGRAM): $(OBJS)
+
+%.obj: %.c
+	$(SET_ENV) && $(CC) $(CFLAGS) /I ..$(SEP)$(INCLUDE_DIR) $(INCLUDE) $(LIBS) /c $<
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -I ..$(SEP)$(INCLUDE_DIR) $(INCLUDE) $(LIBS)
+
+clean:
+	$(RM) $(OBJS)

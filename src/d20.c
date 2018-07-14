@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
     PARSING_EVENT pv = argument_pasre(pr, argv, argc);
     
     if (pv == PARSING_EVENT_VERSION) {
-        printf("%s\n", VERSION);
+        printf("%s%s", VERSION, SEP);
         goto FREE;
     }
     else if (pv == PARSING_EVENT_HELP) {

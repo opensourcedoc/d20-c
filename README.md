@@ -28,6 +28,6 @@ Alternatively, roll with command line arguments, like `2d6+2`:
 $ d20 -r 2 -d 6 -m 2
 ```
 
-## Author
+## Copyright
 
 2018, Michael Chen; this program is licensed under MIT.

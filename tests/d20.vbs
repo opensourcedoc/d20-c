@@ -7,6 +7,16 @@ Assert _
 	(1 <= Result1D6) And (Result1D6 <= 6) , _
 	"Wrong value"
 
+Result1D8 = Capture(DistDir & "\" & Program & " -r 1 -d 8")(0)
+Assert _
+	(1 <= Result1D8) And (Result1D8 <= 8) , _
+	"Wrong value"
+
+Result2D6p1 = Capture(DistDir & "\" & Program & " -r 2 -d 6 -m 1")(0)
+Assert _
+	(3 <= Result2D6p1) And (Result2D6p1 <= 13) , _
+	"Wrong value"
+
 ' Home-made assert for VBScript.
 Sub Assert( boolExpr, strOnFail )
 	If not boolExpr then

@@ -5,6 +5,8 @@
 #include "metadata.h"
 #include "platform.h"
 #include "print_info.h"
+#include "token.h"
+#include "lex.h"
 #include "dice.h"
 
 int main(int argc, char *argv[])
@@ -29,7 +31,21 @@ int main(int argc, char *argv[])
         return EXIT_FAILURE;
     }
     
-    int result = dice_roll(
+    char *input = parsing_result_string(pr);
+    if (!input) {
+        goto ROLL;
+    }
+
+    ObjLex *oLex = lex_new(input);
+    if (!oLex) {
+        goto FREE;
+    }
+
+    lex_free(oLex);
+    
+    int result;
+ROLL:
+    result = dice_roll(
         parsing_result_roll(pr),
         parsing_result_dice(pr),
         parsing_result_modifier(pr)

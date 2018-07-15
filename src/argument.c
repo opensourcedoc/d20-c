@@ -11,6 +11,7 @@ struct parsing_result {
     unsigned int roll;
     unsigned int dice;
     int modifier;
+    char *str;
 };
 
 ParsingResult * parsing_result_new()
@@ -44,6 +45,13 @@ unsigned parsing_result_roll(ParsingResult *self)
     return self->roll;
 }
 
+void parsing_result_set_roll(ParsingResult *self, unsigned r)
+{
+    assert(self);
+    
+    self->roll = r;
+}
+
 unsigned parsing_result_dice(ParsingResult *self)
 {
     assert(self);
@@ -51,11 +59,32 @@ unsigned parsing_result_dice(ParsingResult *self)
     return self->dice;
 }
 
+void parsing_result_set_dice(ParsingResult *self, unsigned d)
+{
+    assert(self);
+    
+    self->dice = d;
+}
+
 int parsing_result_modifier(ParsingResult *self)
 {
     assert(self);
     
     return self->modifier;
+}
+
+void parsing_result_set_modifier(ParsingResult *self, int m)
+{
+    assert(self);
+    
+    self->modifier = m;
+}
+
+char * parsing_result_string(ParsingResult *self)
+{
+    assert(self);
+    
+    return self->str;
 }
 
 PARSING_EVENT argument_pasre(ParsingResult *pr, char **args, int size)
@@ -85,7 +114,7 @@ PARSING_EVENT argument_pasre(ParsingResult *pr, char **args, int size)
             }
             
             
-            pr->roll = r;
+            parsing_result_set_roll(pr, r);
 
             i++;  // Go one step further.
         }
@@ -103,7 +132,7 @@ PARSING_EVENT argument_pasre(ParsingResult *pr, char **args, int size)
                 return PARSING_EVENT_ERROR;
             }
 
-            pr->dice = d;
+            parsing_result_set_dice(pr, d);
             
             i++;  // Go one step further.
         }
@@ -122,11 +151,11 @@ PARSING_EVENT argument_pasre(ParsingResult *pr, char **args, int size)
                 return PARSING_EVENT_ERROR;
             }
             
-            pr->modifier = m;
+            parsing_result_set_modifier(pr, m);
             
             i++;  // Go one step further.
         } else {
-            // Parse d20 string later.
+            pr->str = args[i];
             break;
         }
     }

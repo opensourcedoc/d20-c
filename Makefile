@@ -120,7 +120,7 @@ else
 endif
 
 # Modify it if more than one source files.
-SOURCE=$(PROGRAM:.exe=).c argument.c print_info.c dice.c
+SOURCE=$(PROGRAM:.exe=).c argument.c print_info.c dice.c lex.c token.c
 
 # Set object files.
 ifeq ($(CC),cl)

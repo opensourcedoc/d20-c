@@ -4,12 +4,12 @@
 
 int dice_roll(unsigned roll, unsigned dice, int modifier)
 {
-    int result = 0;
-    
     srand((unsigned) time(NULL));
 
+    int result = 0;
+
     for (unsigned i = 0; i < roll; i++) {
-        result += rand() % (dice - 1) + 1;
+        result += rand() % dice + 1;
     }
     
     result += modifier;

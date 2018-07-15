@@ -9,7 +9,7 @@ typedef enum {
 
 typedef struct token Token;
 
-Token * token_new(char *s, TOKEN_TYPE t);
+Token * token_new(char *s, TOKEN_TYPE t, unsigned loc);
 void token_free(void *self);
 char * token_str(Token *self);
 TOKEN_TYPE token_type(Token *self);

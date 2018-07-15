@@ -111,13 +111,13 @@ static STATE lex_num(ObjLex *self)
     }
 
     size_t size = i - self->curr;
-    self->curr = i;  // Renew self->curr
-    
     char *s = malloc(size * sizeof(char));
     strncpy(s, self->input+self->curr, size);
     s[size] = '\0';
     
-    Token *t = token_new(s, TOKEN_INT);
+    Token *t = token_new(s, TOKEN_INT, self->curr);
+
+    self->curr = i;  // Renew self->curr
     
     free(s);
     
@@ -142,7 +142,7 @@ static STATE lex_dice(ObjLex *self)
     }
 
     char s[2] = {self->input[self->curr], '\0'};
-    Token *t = token_new(s, TOKEN_DICE);
+    Token *t = token_new(s, TOKEN_DICE, self->curr);
 
     STATE st;
     if (self->curr+1 >= self->size) {
@@ -172,7 +172,7 @@ static STATE lex_sign(ObjLex *self)
     }
 
     char s[2] = {self->input[self->curr], '\0'};
-    Token *t = token_new(s, TOKEN_SIGN);
+    Token *t = token_new(s, TOKEN_SIGN, self->curr);
 
     STATE st;
     if (self->curr+1 >= self->size) {

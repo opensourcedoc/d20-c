@@ -4,7 +4,7 @@
 #include "token.h"
 #include "token_internal.h"
 
-Token * token_new(char *s, TOKEN_TYPE t)
+Token * token_new(char *s, TOKEN_TYPE t, unsigned loc)
 {
     Token *token = (Token *) malloc(sizeof(Token));
     if (!token) {
@@ -17,6 +17,7 @@ Token * token_new(char *s, TOKEN_TYPE t)
     token->str[sz] = '\0';
 
     token->t = t;
+    token->loc = loc;
     
     return token;
 }

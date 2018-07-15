@@ -26,7 +26,7 @@ void token_free(void *self)
     if (!self) {
         return;
     }
-    
+
     char *s = ((Token *) self)->str;
     if (s) {
         free(s);

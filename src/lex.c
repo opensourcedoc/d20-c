@@ -20,7 +20,8 @@ typedef enum {
     STATE_INT,
     STATE_DICE,
     STATE_SIGN,
-    STATE_ERROR
+    STATE_ERROR,
+    STATE_END
 } STATE;
 
 static STATE lex_num(ObjLex *obj);
@@ -82,6 +83,8 @@ ObjLex * lex_new(char *input)
         
         if (s == STATE_ERROR) {
             goto FAIL;
+        } else if (s == STATE_END) {
+            break;
         }
     }
     
@@ -137,18 +140,24 @@ static STATE lex_dice(ObjLex *self)
     if (!is_dice(self->input[self->curr])) {
         return STATE_ERROR;
     }
-    
-    char c[2] = {self->input[self->curr], '\0'};
 
-    Token *t = token_new(c, TOKEN_DICE);
-    self->curr += 1;
-    
+    char s[2] = {self->input[self->curr], '\0'};
+    Token *t = token_new(s, TOKEN_DICE);
+
+    STATE st;
+    if (self->curr+1 >= self->size) {
+        st = STATE_END;
+    } else {
+        st = STATE_DICE;
+        self->curr += 1;
+    }
+
     lex_expend(self);
     
     self->data[self->size] = t;
     self->size += 1;
     
-    return STATE_DICE;
+    return st;
 }
 
 static bool is_dice(char c)
@@ -162,17 +171,23 @@ static STATE lex_sign(ObjLex *self)
         return STATE_ERROR;
     }
 
-    char c[2] = {self->input[self->curr], '\0'};
-    
-    Token *t = token_new(c, TOKEN_SIGN);
-    self->curr += 1;
+    char s[2] = {self->input[self->curr], '\0'};
+    Token *t = token_new(s, TOKEN_SIGN);
+
+    STATE st;
+    if (self->curr+1 >= self->size) {
+        st = STATE_END;
+    } else {
+        st = STATE_SIGN;
+        self->curr += 1;
+    }
 
     lex_expend(self);
-    
+
     self->data[self->size] = t;
     self->size += 1;
     
-    return STATE_SIGN;
+    return st;
 }
 
 static bool is_sign(char c)

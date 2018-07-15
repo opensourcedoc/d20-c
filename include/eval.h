@@ -3,6 +3,6 @@
 
 #include "argument.h"
 
-ParsingResult * parse_new(Token **ts);
+ParsingResult * eval(char *input);
 
 #endif  // D20_PARSE_H

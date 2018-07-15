@@ -49,3 +49,10 @@ TOKEN_TYPE token_type(Token *self)
     
     return self->t;
 }
+
+unsigned token_loc(Token *self)
+{
+    assert(self);
+    
+    return self->loc;
+}

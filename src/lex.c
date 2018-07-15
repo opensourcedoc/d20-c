@@ -2,10 +2,12 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+
 #include "lex.h"
+#include "platform.h"
 #include "token.h"
 #include "token_internal.h"
-#include "platform.h"
+#include "utils.h"
 
 struct obj_lex {
     size_t curr;
@@ -56,32 +58,21 @@ ObjLex * lex_new(char *input)
         } else if (is_sign(input[obj->curr])) {
             s = lex_sign(obj);
         } else {
+            s = STATE_ERROR;
+        }
+        
+        if (s == STATE_ERROR) {
             size_t ssz = obj->curr;
-            char *ss;
-            
-            if (ssz == 0) {
-                ss = "";
-            } else {
-                ss = malloc(ssz * sizeof(char));
-                
-                for (size_t j = 0; j < ssz; j++) {
-                    ss[j] = ' ';
-                }
-                
-                ss[ssz] = '\0';
-            }
+            char *ss = space_get(ssz);
             
             fprintf(stderr, "%s%s", obj->input, SEP);
-            fprintf(stderr, "%s^ -- invalid character at %u: %c%s", ss, ssz + 1, obj->input[ssz], SEP);
+            fprintf(stderr, "%s^ -- invalid character at %u: %c%s", 
+                ss, ssz + 1, obj->input[ssz], SEP);
             
             if (ssz > 0) {
                 free(ss);
             }
 
-            s = STATE_ERROR;
-        }
-        
-        if (s == STATE_ERROR) {
             goto FAIL;
         } else if (s == STATE_END) {
             break;
@@ -137,20 +128,16 @@ static bool is_num(char c)
 
 static STATE lex_dice(ObjLex *self)
 {
-    if (!is_dice(self->input[self->curr])) {
-        return STATE_ERROR;
-    }
-
     char s[2] = {self->input[self->curr], '\0'};
     Token *t = token_new(s, TOKEN_DICE, self->curr);
 
     STATE st;
-    if (self->curr+1 >= self->size) {
+    if (self->curr+1 >= strlen(self->input)) {
         st = STATE_END;
     } else {
         st = STATE_DICE;
-        self->curr += 1;
     }
+    self->curr += 1;
 
     lex_expend(self);
     
@@ -167,20 +154,16 @@ static bool is_dice(char c)
 
 static STATE lex_sign(ObjLex *self)
 {
-    if (!is_sign(self->input[self->curr])) {
-        return STATE_ERROR;
-    }
-
     char s[2] = {self->input[self->curr], '\0'};
     Token *t = token_new(s, TOKEN_SIGN, self->curr);
 
     STATE st;
-    if (self->curr+1 >= self->size) {
+    if (self->curr+1 >= strlen(self->input)) {
         st = STATE_END;
     } else {
         st = STATE_SIGN;
-        self->curr += 1;
     }
+    self->curr += 1;
 
     lex_expend(self);
 

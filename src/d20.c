@@ -36,12 +36,12 @@ int main(int argc, char *argv[])
         goto ROLL;
     }
 
-    ObjLex *oLex = lex_new(input);
-    if (!oLex) {
-        goto FREE;
+    ParsingResult *out = eval(input);
+    if (!out) {
+        goto ROLL;
     }
 
-    lex_free(oLex);
+    parsing_result_free(out);
     
     int result;
 ROLL:

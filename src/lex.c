@@ -124,6 +124,10 @@ static STATE lex_num(ObjLex *self)
     self->data[self->size] = t;
     self->size += 1;
     
+    if (i >= sz) {
+        return STATE_END;
+    }
+    
     return STATE_INT;
 }
 

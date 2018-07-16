@@ -142,6 +142,7 @@ bool eval(char *input, ParsingResult *out)
     }
     
     str_m = token_str(tn);
+    printf("modifier: %s\n", str_m);
     
     // 6th or further token is invalid.
     tn = lex_next(oLex);
@@ -149,26 +150,28 @@ bool eval(char *input, ParsingResult *out)
         show_error(input, tn);
         goto PARSE_FAIL;
     }
-    
-    unsigned r = strtoul(str_r, NULL, 10);
-    parsing_result_set_roll(out, r);
-    
-    unsigned d = strtoul(str_d, NULL, 10);
-    parsing_result_set_dice(out, d);
-    
+
     size_t sz = strlen(str_sign) + strlen(str_m) + 1;
     char *ss = malloc(sz * sizeof(char));
     
     strcpy(ss, str_sign);
     strcat(ss, str_m);
     ss[sz] = '\0';
-    
+
     int m = strtol(ss, NULL, 10);
     parsing_result_set_modifier(out, m);
     
     free(ss);
 
-PARSE_END:
+    unsigned r;
+    unsigned d;
+PARSE_END:    
+    r = strtoul(str_r, NULL, 10);
+    parsing_result_set_roll(out, r);
+    
+    d = strtoul(str_d, NULL, 10);
+    parsing_result_set_dice(out, d);
+
     return true;
 
 PARSE_FAIL:

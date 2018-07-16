@@ -170,6 +170,8 @@ PARSE_END:
     
     d = strtoul(str_d, NULL, 10);
     parsing_result_set_dice(out, d);
+    
+    lex_free(oLex);
 
     return true;
 

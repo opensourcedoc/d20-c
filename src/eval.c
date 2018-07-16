@@ -37,6 +37,16 @@ ParsingResult * eval(char *input)
     // 1st token is mandatory.
     tn = lex_next(oLex);
     if (!tn) {
+        char *ss = space_get(strlen(input));
+        
+        fprintf(stderr, "%s%s", input, SEP);
+        fprintf(stderr, "%s^ -- no valid number at %u%s", 
+            ss, strlen(input) + 1, SEP);
+
+        if (strlen(ss) > 0) {
+            free(ss);
+        }
+        
         goto PARSE_FAIL;
     }
 
@@ -49,6 +59,16 @@ ParsingResult * eval(char *input)
     // 2nd token is mandatory.
     tn = lex_next(oLex);
     if (!tn) {
+        char *ss = space_get(strlen(input));
+        
+        fprintf(stderr, "%s%s", input, SEP);
+        fprintf(stderr, "%s^ -- no valid dice string at %u%s", 
+            ss, strlen(input) + 1, SEP);
+
+        if (strlen(ss) > 0) {
+            free(ss);
+        }
+        
         goto PARSE_FAIL;
     }
     
@@ -61,6 +81,16 @@ ParsingResult * eval(char *input)
     // 3rd token is mandatory.
     tn = lex_next(oLex);
     if (!tn) {
+        char *ss = space_get(strlen(input));
+        
+        fprintf(stderr, "%s%s", input, SEP);
+        fprintf(stderr, "%s^ -- no valid dice face at %u%s", 
+            ss, strlen(input) + 1, SEP);
+
+        if (strlen(ss) > 0) {
+            free(ss);
+        }
+        
         goto PARSE_FAIL;
     }
     

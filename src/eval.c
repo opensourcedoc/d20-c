@@ -19,6 +19,13 @@ ParsingResult * eval(char *input)
     if (!pr) {
         return pr;
     }
+    
+    if (strlen(input) == 0) {
+        fprintf(stderr, "No valid d20 string%s", SEP);
+
+        parsing_result_free(pr);
+        return NULL;
+    }
 
     ObjLex *oLex = lex_new(input);
     if (!oLex) {

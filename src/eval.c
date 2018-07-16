@@ -142,7 +142,6 @@ bool eval(char *input, ParsingResult *out)
     }
     
     str_m = token_str(tn);
-    printf("modifier: %s\n", str_m);
     
     // 6th or further token is invalid.
     tn = lex_next(oLex);

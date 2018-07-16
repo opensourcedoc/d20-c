@@ -41,6 +41,7 @@ int main(int argc, char *argv[])
     ParsingResult *out = parsing_result_new();
     if (!eval(input, out)) {
         parsing_result_free(out);
+        parsing_result_free(pr);
         return EXIT_FAILURE;
     }
 

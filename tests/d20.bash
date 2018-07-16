@@ -17,3 +17,13 @@ DIST_DIR=dist
     run ./$DIST_DIR/$PROGRAM -r 2 -d 6 -m 1
     [ "$output" -ge "3" -a "$output" -le "13" ]
 }
+
+@test "Test 1d6 by string" {
+    run ./$DIST_DIR/$PROGRAM "1d6"
+    [ "$output" -ge "1" -a "$output" -le "6" ]
+}
+
+@test "Test 2d8+1 by string" {
+    run ./$DIST_DIR/$PROGRAM "2d8+1"
+    [ "$output" -ge "3" -a "$output" -le "17" ]
+}

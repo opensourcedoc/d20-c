@@ -45,6 +45,10 @@ int main(int argc, char *argv[])
         parsing_result_free(pr);
         return EXIT_FAILURE;
     }
+    
+    parsing_result_set_roll(pr, parsing_result_roll(out));
+    parsing_result_set_dice(pr, parsing_result_dice(out));
+    parsing_result_set_modifier(pr, parsing_result_modifier(out));
 
     parsing_result_free(out);
     

@@ -52,6 +52,7 @@ ObjLex * lex_new(char *input)
     
     STATE s;
     size_t sz = strlen(input);
+    // Lex the input string by a finite automata.
     while (obj->curr < sz) {
         if (is_num(input[obj->curr])) {
             s = lex_num(obj);
@@ -62,7 +63,8 @@ ObjLex * lex_new(char *input)
         } else {
             s = STATE_ERROR;
         }
-        
+
+        // Show an error message if something wrong.
         if (s == STATE_ERROR) {
             size_t ssz = obj->curr;
             char *ss = space_get(ssz);
@@ -75,8 +77,11 @@ ObjLex * lex_new(char *input)
                 free(ss);
             }
 
+            // Exit the automata.
             goto FAIL;
-        } else if (s == STATE_END) {
+        }
+        // Stop the automata.
+        else if (s == STATE_END) {
             break;
         }
     }

@@ -104,11 +104,13 @@ PARSING_EVENT argument_pasre(ParsingResult *pr, char **args, int size)
         }
         // Roll
         else if (strcmp(args[i], "-r") == 0 || strcmp(args[i], "--roll") == 0) {
+            // Check if any available value.
             if (i+1 >= size) {
                 fprintf(stderr, "No valid roll%s", SEP);
                 return PARSING_EVENT_ERROR;
             }
 
+            // Convert the value from string to unsigned int.
             unsigned int r = strtoul(args[i+1], NULL, 10);
             if (args[i+1][0] == '-' || r == 0) {
                 fprintf(stderr, "Invalid roll: %s%s", args[i+1], SEP);
@@ -116,18 +118,20 @@ PARSING_EVENT argument_pasre(ParsingResult *pr, char **args, int size)
                 return PARSING_EVENT_ERROR;
             }
             
-            
+            // Set the ParsingResult object.
             parsing_result_set_roll(pr, r);
 
             i++;  // Go one step further.
         }
         // Dice
         else if (strcmp(args[i], "-d") == 0 || strcmp(args[i], "--dice") == 0) {
+            // Check if any available value.
             if (i+1 >= size) {
                 fprintf(stderr, "No valid dice%s", SEP);
                 return PARSING_EVENT_ERROR;
             }
             
+            // Convert the value from string to unsigned int.
             unsigned int d = strtoul(args[i+1], NULL, 10);
             if (args[i+1][0] == '-' || d == 0) {
                 fprintf(stderr, "Invalid dice: %s%s", args[i+1], SEP);
@@ -135,18 +139,20 @@ PARSING_EVENT argument_pasre(ParsingResult *pr, char **args, int size)
                 return PARSING_EVENT_ERROR;
             }
 
+            // Set the ParsingResult object.
             parsing_result_set_dice(pr, d);
             
             i++;  // Go one step further.
         }
         // Modifier
         else if (strcmp(args[i], "-m") == 0 || strcmp(args[i], "--modifier") == 0) {
+            // Check if any available value.
             if (i+1 >= size) {
                 fprintf(stderr, "No valid modifier%s", SEP);
                 return PARSING_EVENT_ERROR;
             }
             
-            
+            // Convert the value from string to int.
             int m = strtol(args[i+1], NULL, 10);
             if (errno == ERANGE) {
                 fprintf(stderr, "Invalid modifier: %s%s", args[i+1], SEP);
@@ -154,10 +160,14 @@ PARSING_EVENT argument_pasre(ParsingResult *pr, char **args, int size)
                 return PARSING_EVENT_ERROR;
             }
             
+            // Set the ParsingResult object.
             parsing_result_set_modifier(pr, m);
             
             i++;  // Go one step further.
-        } else {
+        }
+        // d20 string.
+        else {
+            // Set d20 string.
             pr->str = args[i];
             break;
         }

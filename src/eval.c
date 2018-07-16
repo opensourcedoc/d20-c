@@ -160,7 +160,7 @@ bool eval(char *input, ParsingResult *out)
     char *ss = malloc(sz * sizeof(char));
     
     strcpy(ss, str_sign);
-    strcpy(ss, str_m);
+    strcat(ss, str_m);
     ss[sz] = '\0';
     
     int m = strtol(ss, NULL, 10);

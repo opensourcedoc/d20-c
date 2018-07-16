@@ -182,7 +182,16 @@ static void lex_expend(ObjLex *self)
 {
     if (self->size >= self->capacity) {
         self->capacity = self->size * 2;
-        self->data = (Token **) realloc(self->data, self->capacity);
+        
+        Token **dataOld = self->data;
+        Token **dataNew = malloc(self->capacity * sizeof(Token*));
+        
+        for (size_t i = 0; i < self->size; i++) {
+            dataNew[i] = dataOld[i];
+        }
+        
+        free(dataOld);
+        self->data = dataNew;
     }
 }
 

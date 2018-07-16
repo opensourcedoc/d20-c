@@ -67,7 +67,7 @@ static void show_error(char *input, Token *tn)
         
     fprintf(stderr, "%s%s", input, SEP);
     fprintf(stderr, "%s^ -- invalid string at %u: %s%s", 
-        ss, token_loc(tn), token_str(tn), SEP);
+        ss, token_loc(tn) + 1, token_str(tn), SEP);
 
     if (strlen(ss) > 0) {
         free(ss);

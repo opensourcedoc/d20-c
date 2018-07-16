@@ -127,6 +127,13 @@ bool eval(char *input, ParsingResult *out)
         show_error(input, tn);
         goto PARSE_FAIL;
     }
+    
+    // 6th or further token is invalid.
+    tn = lex_next(oLex);
+    if (tn) {
+        show_error(input, tn);
+        goto PARSE_FAIL;
+    }
 
 PARSE_END:
     return true;

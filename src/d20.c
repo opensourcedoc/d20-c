@@ -1,13 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 #include "argument.h"
-#include "parsing_event.h"
+#include "dice.h"
+#include "eval.h"
+#include "lex.h"
 #include "metadata.h"
+#include "parsing_event.h"
 #include "platform.h"
 #include "print_info.h"
 #include "token.h"
-#include "lex.h"
-#include "dice.h"
 
 int main(int argc, char *argv[])
 {

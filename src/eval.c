@@ -8,6 +8,8 @@
 #include "token.h"
 #include "utils.h"
 
+static void show_error(char *input, Token *tn);
+
 ParsingResult * eval(char *input)
 {
     ParsingResult * pr = parsing_result_new();
@@ -24,23 +26,50 @@ ParsingResult * eval(char *input)
     
     tn = lex_next(oLex);
     if (!tn) {
-        goto LEX_FREE;
+        goto PARSE_FAIL;
     }
     
     if (token_type(tn) != TOKEN_INT) {
-        char *ss = space_get(token_loc(tn));
-
-        fprintf(stderr, "%s%s", input, SEP);
-        fprintf(stderr, "%s^ -- invalid string at %u: %s%s", 
-            ss, token_loc(tn), token_str(tn), SEP);
-        
-        if (token_loc(tn) > 0) {
-            free(ss);
-        }
+        show_error(input, tn);
+        goto PARSE_FAIL;
+    }
+    
+    tn = lex_next(oLex);
+    if (!tn) {
+        goto PARSE_FAIL;
+    }
+    
+    if (token_type(tn) != TOKEN_DICE) {
+        show_error(input, tn);
+        goto PARSE_FAIL;
+    }
+    
+    tn = lex_next(oLex);
+    if (!tn) {
+        goto PARSE_FAIL;
+    }
+    
+    if (token_type(tn) != TOKEN_INT) {
+        show_error(input, tn);
+        goto PARSE_FAIL;
     }
 
-LEX_FREE:
+PARSE_FAIL:
     lex_free(oLex);
+    parsing_result_free(pr);
     
-    return pr;
+    return NULL;
+}
+
+static void show_error(char *input, Token *tn)
+{
+    char *ss = space_get(token_loc(tn));
+        
+    fprintf(stderr, "%s%s", input, SEP);
+    fprintf(stderr, "%s^ -- invalid string at %u: %s%s", 
+        ss, token_loc(tn), token_str(tn), SEP);
+
+    if (strlen(ss) > 0) {
+        free(ss);
+    }
 }

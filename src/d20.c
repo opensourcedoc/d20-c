@@ -38,9 +38,10 @@ int main(int argc, char *argv[])
         goto ROLL;
     }
 
-    ParsingResult *out = eval(input);
-    if (!out) {
-        goto ROLL;
+    ParsingResult *out;
+    if (!eval(input, &out)) {
+        parsing_result_free(out);
+        return EXIT_FAILURE;
     }
 
     parsing_result_free(out);

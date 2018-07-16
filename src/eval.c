@@ -1,3 +1,4 @@
+#include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -13,23 +14,16 @@ static void show_error(char *input, Token *tn);
 
 // eval is the combo of lexer, parser, and interpreter.
 // We mixed parser and interpreter due to the simple and fixed format of d20 string.
-ParsingResult * eval(char *input)
+bool eval(char *input, ParsingResult *out)
 {
-    ParsingResult * pr = parsing_result_new();
-    if (!pr) {
-        return pr;
-    }
-    
     if (strlen(input) == 0) {
         fprintf(stderr, "No valid d20 string%s", SEP);
-
-        parsing_result_free(pr);
-        return NULL;
+        return false;
     }
 
     ObjLex *oLex = lex_new(input);
     if (!oLex) {
-        return NULL;
+        return false;
     }
     
     Token *tn;
@@ -135,13 +129,12 @@ ParsingResult * eval(char *input)
     }
 
 PARSE_END:
-    return pr;
+    return true;
 
 PARSE_FAIL:
     lex_free(oLex);
-    parsing_result_free(pr);
     
-    return NULL;
+    return false;
 }
 
 static void show_error(char *input, Token *tn)

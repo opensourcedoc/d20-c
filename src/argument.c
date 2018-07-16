@@ -4,8 +4,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+
 #include "argument.h"
 #include "platform.h"
+
 
 struct parsing_result {
     unsigned int roll;
@@ -13,6 +15,7 @@ struct parsing_result {
     int modifier;
     char *str;
 };
+
 
 ParsingResult * parsing_result_new()
 {

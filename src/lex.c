@@ -9,6 +9,7 @@
 #include "token_internal.h"
 #include "utils.h"
 
+
 struct obj_lex {
     size_t curr;
     size_t index;
@@ -25,6 +26,7 @@ typedef enum {
     STATE_ERROR,
     STATE_END
 } STATE;
+
 
 static STATE lex_num(ObjLex *obj);
 static STATE lex_dice(ObjLex *obj);

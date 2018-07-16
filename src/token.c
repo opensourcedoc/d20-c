@@ -1,8 +1,10 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include "token.h"
 #include "token_internal.h"
+
 
 Token * token_new(char *s, TOKEN_TYPE t, unsigned loc)
 {

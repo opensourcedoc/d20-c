@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <time.h>
+
 #include "dice.h"
+
 
 int dice_roll(unsigned roll, unsigned dice, int modifier)
 {

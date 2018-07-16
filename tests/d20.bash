@@ -14,6 +14,6 @@ DIST_DIR=dist
 }
 
 @test "Test 2d6+1" {
-    run ./$DIST_DIR/$PROGRAM -r 2 -d 6 + 1
+    run ./$DIST_DIR/$PROGRAM -r 2 -d 6 -m 1
     [ "$output" -ge "3" -a "$output" -le "13" ]
 }

@@ -1,7 +1,9 @@
 #include <stdio.h>
-#include "print_info.h"
+
 #include "metadata.h"
 #include "platform.h"
+#include "print_info.h"
+
 
 void print_help(FILE *stream)
 {

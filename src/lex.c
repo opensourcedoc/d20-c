@@ -67,7 +67,7 @@ ObjLex * lex_new(char *input)
             
             fprintf(stderr, "%s%s", obj->input, SEP);
             fprintf(stderr, "%s^ -- invalid character at %u: %c%s", 
-                ss, ssz + 1, obj->input[ssz], SEP);
+                ss, (unsigned) ssz + 1, obj->input[ssz], SEP);
             
             if (ssz > 0) {
                 free(ss);

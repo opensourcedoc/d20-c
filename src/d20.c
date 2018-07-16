@@ -38,8 +38,8 @@ int main(int argc, char *argv[])
         goto ROLL;
     }
 
-    ParsingResult *out;
-    if (!eval(input, &out)) {
+    ParsingResult *out = parsing_result_new();
+    if (!eval(input, out)) {
         parsing_result_free(out);
         return EXIT_FAILURE;
     }

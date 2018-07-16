@@ -24,6 +24,7 @@ typedef enum {
     STATE_DICE,
     STATE_SIGN,
     STATE_ERROR,
+    STATE_INVALID,
     STATE_END
 } STATE;
 
@@ -80,6 +81,10 @@ ObjLex * lex_new(char *input)
             // Exit the automata.
             goto FAIL;
         }
+        else if (s == STATE_INVALID) {
+            // Exit the automata.
+            goto FAIL;
+        }
         // Stop the automata.
         else if (s == STATE_END) {
             break;
@@ -112,6 +117,34 @@ static STATE lex_num(ObjLex *self)
     char *s = malloc(size * sizeof(char));
     strncpy(s, self->input+self->curr, size);
     s[size] = '\0';
+    
+    if (s[0] == '0') {
+        size_t ssz = i - strlen(s);
+        
+        char *ss;
+        if (ssz == 0) {
+            ss = "";
+        } else {
+            ss = malloc(ssz * sizeof(char));
+            
+            for (size_t j = 0; j < ssz; j++) {
+                ss[j] = ' ';
+            }
+            
+            ss[ssz] = '\0';
+        }
+        
+        fprintf(stderr, "%s%s", self->input, SEP);
+        fprintf(stderr, "%s^ -- invalid number at %u%s", ss, ssz, SEP);
+        
+        if (strlen(ss) > 0) {
+            free(ss);
+        }
+        
+        free(s);
+        
+        return STATE_INVALID;
+    }
     
     Token *t = token_new(s, TOKEN_INT, self->curr);
 

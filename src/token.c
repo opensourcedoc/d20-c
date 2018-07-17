@@ -15,6 +15,7 @@ Token * token_new(char *s, TOKEN_TYPE t, unsigned loc)
     
     size_t sz = strlen(s) + 1;
     token->str = malloc(sz * sizeof(char));
+#pragma warning(disable:4996)
     strcpy(token->str, s);
     token->str[sz] = '\0';
 

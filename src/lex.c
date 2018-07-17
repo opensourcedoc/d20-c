@@ -115,6 +115,7 @@ static STATE lex_num(ObjLex *self)
 
     size_t size = i - self->curr;
     char *s = malloc(size * sizeof(char));
+#pragma warning(disable:4996)
     strncpy(s, self->input+self->curr, size);
     s[size] = '\0';
     

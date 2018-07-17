@@ -152,7 +152,8 @@ bool eval(char *input, ParsingResult *out)
 
     size_t sz = strlen(str_sign) + strlen(str_m) + 1;
     char *ss = malloc(sz * sizeof(char));
-    
+
+#pragma warning(disable:4996)
     strcpy(ss, str_sign);
     strcat(ss, str_m);
     ss[sz] = '\0';

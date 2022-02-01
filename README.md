@@ -30,4 +30,4 @@ $ d20 -r 2 -d 6 -m 2
 
 ## Copyright
 
-2018, Michael Chen; this program is licensed under MIT.
+Copyright (c) 2018 Michelle Chen. Licensed under MIT
